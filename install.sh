@@ -156,7 +156,7 @@ network_selector
 de_selector
 
 # Checking if machine is vm
-read -r -p "This will delete the current partition on $DISK. Do you agree [y/N]? " response
+read -r -p "Is this machine a VM [y/N]? " response
 response=${response,,}
 if [[ "$response" =~ ^(yes|y)$ ]]
 then
