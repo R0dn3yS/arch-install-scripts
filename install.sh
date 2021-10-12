@@ -69,17 +69,17 @@ de_selector () {
 	echo "$choice will be installed"
 	case $choice in
 		1 ) echo "Installing XFCE."
-			pacstrap /mnt xfce4 xfce4-goodies lightdm
+			pacstrap /mnt xfce4 xfce4-goodies lightdm xorg
 			echo "Enabling LightDM."
 			systemctl enable lightdm --root=/mnt &>/dev/null
 			;;
 		2 ) echo "Installing Gnome."
-			pacstrap /mnt gnome
+			pacstrap /mnt gnome gdm xorg
 			echo "Enabling GDM."
 			systemctl enable gdm --root=/mnt &>/dev/null
 			;;
 		3 ) echo "Installing Plasma."
-			pacstrap /mnt plasma-meta sddm
+			pacstrap /mnt plasma-meta sddm xorg
 			echo "Enabling SDDM."
 			systemctl enable sddm --root=/mnt &>/dev/null
 			;;
