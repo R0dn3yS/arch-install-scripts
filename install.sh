@@ -136,7 +136,7 @@ echo "Informing the kernel about the disk changes."
 partprobe "$DISK"
 
 # Formatting the ESP as FAT32.
-mkfs.fat -f -F 32 $ESP &>/dev/null
+mkfs.fat -f -F32 $ESP &>/dev/null
 
 # Formatting the root partition as BTRFS.
 mkfs.btrfs -f $BTRFS &>/dev/null
@@ -154,6 +154,17 @@ pacstrap /mnt base $kernel $microcode linux-firmware btrfs-progs grub grub-btrfs
 
 network_selector
 de_selector
+
+# Checking if machine is vm
+read -r -p "This will delete the current partition on $DISK. Do you agree [y/N]? " response
+response=${response,,}
+if [[ "$response" =~ ^(yes|y)$ ]]
+then
+	echo "Installing Virtualbox guest utils."
+	pacstrap /mnt virtualbox-guest-utils
+	echo "Enabling vboxservice."
+	systemctl enable vboxservice --root=/mnt &>/dev/null
+fi
 
 # Generating /etc/fstab.
 echo "Generating a new fstab."
@@ -198,12 +209,10 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	echo "Creating GRUB config file."
 	grub-mkconfig -o /boot/grub/grub.cfg &>/dev/null
 	# Adding user with sudo privilege
-	if [ -n "$username" ]; then
-        echo "Adding $username with root privilege."
-        useradd -m $username
-        usermod -aG wheel $username
-        echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
-    fi
+    echo "Adding $username with root privilege."
+    useradd -m $username
+    usermod -aG wheel $username
+    echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
 EOF
 
 # Setting root password.
