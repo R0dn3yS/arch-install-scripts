@@ -216,6 +216,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
 
 	# Installing yay
 	su $username
+	cd ~
 	git clone https://aur.archlinux.org/yay.git
 	cd yay
 	makepkg -si
