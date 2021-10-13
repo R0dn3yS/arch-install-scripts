@@ -213,6 +213,12 @@ arch-chroot /mnt /bin/bash -e <<EOF
     useradd -m $username
     usermod -aG wheel $username
     echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
+
+	# Installing yay
+	su rodney
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
 EOF
 
 # Setting root password.
