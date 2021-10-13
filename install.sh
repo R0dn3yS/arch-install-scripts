@@ -209,10 +209,10 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	echo "Creating GRUB config file."
 	grub-mkconfig -o /boot/grub/grub.cfg &>/dev/null
 	# Adding user with sudo privilege
-    echo "Adding $username with root privilege."
-    useradd -m $username
-    usermod -aG wheel $username
-    echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
+	echo "Adding $username with root privilege."
+	useradd -m $username
+	usermod -aG wheel $username
+	echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
 
 	# Installing yay
 	su $username
