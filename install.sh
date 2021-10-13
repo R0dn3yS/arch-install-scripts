@@ -213,19 +213,21 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	useradd -m $username
 	usermod -aG wheel $username
 	echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
-
-	# Installing yay
-	su $username
-	cd ~
-	git clone https://aur.archlinux.org/yay.git
-	cd yay
-	makepkg -si
 EOF
 
 # Setting root password.
 echo "Setting root password."
 arch-chroot /mnt /bin/passwd
 [ -n "$username" ] && echo "Setting user password for ${username}." && arch-chroot /mnt /bin/passwd "$username"
+
+# Installing yay
+arch-chroot /mnt /bin/bash -e <<EOF
+	su $username
+	cd ~
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+EOF
 
 # Finishing up
 echo "Done, you may now wish to reboot (further changes can be done by chrooting into /mnt)."
