@@ -215,7 +215,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
     echo "$username ALL=(ALL) ALL" >> /etc/sudoers.d/$username
 
 	# Installing yay
-	su rodney
+	su $username
 	git clone https://aur.archlinux.org/yay.git
 	cd yay
 	makepkg -si
