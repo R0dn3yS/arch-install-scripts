@@ -69,7 +69,7 @@ de_selector () {
 	echo "$choice will be installed"
 	case $choice in
 		1 ) echo "Installing XFCE."
-			pacstrap /mnt xfce4 xfce4-goodies lightdm xorg
+			pacstrap /mnt xfce4 xfce4-goodies xorg xorg-server lightdm-gtk-greeter
 			echo "Enabling LightDM."
 			systemctl enable lightdm --root=/mnt &>/dev/null
 			;;
@@ -153,7 +153,6 @@ echo "Installing the base system (it may take a while)."
 pacstrap /mnt base $kernel $microcode linux-firmware btrfs-progs grub grub-btrfs efibootmgr base-devel git neofetch nano micro
 
 network_selector
-de_selector
 
 # Checking if machine is vm
 read -r -p "Is this machine a VM [y/N]? " response
@@ -228,6 +227,8 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	cd yay
 	makepkg -si --noconfirm
 EOF
+
+de_selector
 
 # Finishing up
 echo "Done, you may now wish to reboot (further changes can be done by chrooting into /mnt)."
