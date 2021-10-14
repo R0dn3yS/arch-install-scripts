@@ -153,6 +153,7 @@ echo "Installing the base system (it may take a while)."
 pacstrap /mnt base $kernel $microcode linux-firmware btrfs-progs grub grub-btrfs efibootmgr base-devel git neofetch nano micro
 
 network_selector
+de_selector2
 
 # Checking if machine is vm
 read -r -p "Is this machine a VM [y/N]? " response
@@ -227,8 +228,6 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	cd yay
 	makepkg -si --noconfirm
 EOF
-
-de_selector
 
 # Finishing up
 echo "Done, you may now wish to reboot (further changes can be done by chrooting into /mnt)."
