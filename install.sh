@@ -226,7 +226,7 @@ arch-chroot /mnt /bin/bash -e <<EOF
 	cd ~
 	git clone https://aur.archlinux.org/yay.git
 	cd yay
-	makepkg -si
+	makepkg -si --noconfirm
 EOF
 
 # Finishing up
